@@ -6,6 +6,7 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
 import com.nearinfinity.examples.zookeeper.util.ConnectionWatcher;
@@ -29,5 +30,8 @@ public class ActiveKeyValueStore extends ConnectionWatcher {
         return new String(data, CHARSET);
     }
 
+    public ZooKeeper zooKeeper() {
+        return zk;
+    }
 
 }

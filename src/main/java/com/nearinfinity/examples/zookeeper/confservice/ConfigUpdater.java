@@ -26,16 +26,25 @@ public class ConfigUpdater {
     @SuppressWarnings("squid:S2189")
     public void run() throws InterruptedException, KeeperException {
         //noinspection InfiniteLoopStatement
-        while (true) {
-            int value = random.nextInt(100);
-            store.write(PATH, Integer.toString(value));
-            LOG.info("Set {} to {}", PATH, value);
-            TimeUnit.SECONDS.sleep(random.nextInt(10));
-        }
+//        while (true) {
+//            int value = random.nextInt(100);
+//            store.write(PATH, Integer.toString(value));
+//            LOG.info("Set {} to {}", PATH, value);
+//            TimeUnit.SECONDS.sleep(random.nextInt(10));
+//        }
+
+        store.write(PATH + "/" + "first", "1");
+        store.write(PATH + "/" + "second", "2");
+
+        TimeUnit.SECONDS.sleep(10);
+
+        store.zooKeeper().delete(PATH + "/" + "first", 0);
+        store.zooKeeper().delete(PATH + "/" + "second", 0);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
-        ConfigUpdater updater = new ConfigUpdater(args[0]);
+        String host = "localhost:2181";
+        ConfigUpdater updater = new ConfigUpdater(host);
         updater.run();
     }
 
